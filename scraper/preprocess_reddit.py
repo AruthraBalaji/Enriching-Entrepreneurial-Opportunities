@@ -1,3 +1,8 @@
+#Install Requirements
+#pip install pymongo spacy
+#python -m spacy download en_core_web_sm
+
+
 from pymongo import MongoClient
 import spacy
 import re
