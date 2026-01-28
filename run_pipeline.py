@@ -1,5 +1,5 @@
 from datetime import datetime
-from collections import defaultdict
+from collections import defaultdict, Counter
 from typing import List
 
 from config.database import db
@@ -32,9 +32,9 @@ def main():
     # 1️⃣ Load data
     posts = load_preprocessed_posts()
 
-    # 🔍 SHOW SAMPLE PREPROCESSED DATA
+    # 🔍 SAMPLE CHECK
     print("\n🔍 SAMPLE PREPROCESSED POSTS\n")
-    for i, p in enumerate(posts[:5]):  # show first 5 only
+    for i, p in enumerate(posts[:5]):
         print(f"Post {i+1}")
         print("Original title:", p.get("title"))
         print("Original text:", p.get("selftext", "")[:200])
@@ -59,7 +59,8 @@ def main():
     # 5️⃣ Aggregate per-topic stats
     topic_agg = defaultdict(lambda: {
         "count": 0,
-        "sentiment_sum": 0.0
+        "sentiment_sum": 0.0,
+        "sentiment_labels": []
     })
 
     for topic, sent in zip(topics, sentiments):
@@ -67,23 +68,28 @@ def main():
             continue
         topic_agg[topic]["count"] += 1
         topic_agg[topic]["sentiment_sum"] += sent["compound"]
+        topic_agg[topic]["sentiment_labels"].append(sent["label"])
 
-    # 6️⃣ Build topic_stats for scoring
+    # 6️⃣ Build topic_stats
     topic_stats = {}
 
     for topic, stats in topic_agg.items():
+        avg_sentiment = stats["sentiment_sum"] / stats["count"]
+        dominant_sentiment = Counter(stats["sentiment_labels"]).most_common(1)[0][0]
+
         topic_stats[topic] = {
             "demand": stats["count"],
-            "sentiment": stats["sentiment_sum"] / stats["count"],
+            "sentiment": avg_sentiment,
+            "sentiment_label": dominant_sentiment,
             "trend": trend_scores.get(topic, 0.0),
-            "competition": 0.5  # placeholder
+            "competition": 0.5
         }
 
     # 7️⃣ Compute Opportunity Scores
     print("🔹 Computing opportunity scores...")
     scores = compute_opportunity_scores(topic_stats)
 
-    # 8️⃣ Prepare ranked output
+    # 8️⃣ Output
     opportunities = []
 
     for topic, score in scores.items():
@@ -92,18 +98,19 @@ def main():
             "score": score,
             "volume": topic_stats[topic]["demand"],
             "trend": topic_stats[topic]["trend"],
+            "sentiment": topic_stats[topic]["sentiment_label"],
             "keywords": topic_keywords.get(topic, [])
         })
 
     opportunities.sort(key=lambda x: x["score"], reverse=True)
 
-    # 🔥 OUTPUT
     print("\n🎯 TOP OPPORTUNITIES\n")
-    for opp in opportunities[:5]:
+    for opp in opportunities:
         print(f"Topic ID: {opp['topic']}")
         print(f"Score: {opp['score']}")
         print(f"Volume: {opp['volume']}")
         print(f"Trend: {opp['trend']:.2f}")
+        print(f"Sentiment: {opp['sentiment']}")
         print(f"Keywords: {opp['keywords']}")
         print("-" * 40)
 

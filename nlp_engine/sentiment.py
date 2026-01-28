@@ -25,7 +25,16 @@ def analyze_sentiment(text: str) -> dict:
         abs(scores["compound"]) + (0.08 * keyword_hits)
     )
 
+    # ✅ sentiment label
+    if scores["compound"] >= 0.05:
+        label = "positive"
+    elif scores["compound"] <= -0.05:
+        label = "negative"
+    else:
+        label = "neutral"
+
     return {
+        "label": label,
         "compound": round(scores["compound"], 3),
         "negative": round(scores["neg"], 3),
         "neutral": round(scores["neu"], 3),
