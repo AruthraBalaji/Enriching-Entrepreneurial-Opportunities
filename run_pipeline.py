@@ -114,6 +114,35 @@ def main():
         print(f"Keywords: {opp['keywords']}")
         print("-" * 40)
 
+    # 9️⃣ UPDATE MongoDB with results
+    print("💾 Updating MongoDB with sentiment, topic, trend, score...")
+
+    for post, sent, topic in zip(posts, sentiments, topics):
+        if topic == -1:
+            continue
+
+        POSTS_COLLECTION.update_one(
+            {"_id": post["_id"]},
+            {
+                "$set": {
+                    "sentiment": {
+                        "label": (
+                            "positive" if sent["compound"] > 0.05
+                            else "negative" if sent["compound"] < -0.05
+                            else "neutral"
+                        ),
+                        "compound": sent["compound"]
+                    },
+                    "topic_id": topic,
+                    "trend": trend_scores.get(topic, 0.0),
+                    "score": scores.get(topic, 0.0),
+                    "pipeline_version": "v1",
+                    "updated_at": datetime.utcnow()
+                }
+            }
+        )
+
+    print("✅ MongoDB updated successfully")
     print("\n✅ Pipeline completed successfully!")
 
 
