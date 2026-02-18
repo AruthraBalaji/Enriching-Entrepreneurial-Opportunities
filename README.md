@@ -1,4 +1,4 @@
-# 🚀 Reddit Pain Points Scraper
+# Reddit Pain Points Scraper
 
 **Scrape Reddit complaints → Detect pain points → Find business opportunities**
 
@@ -6,18 +6,18 @@ A production-ready system to scrape Reddit posts, detect pain points and opportu
 
 ---
 
-## 🎯 **What This Project Does**
+## **What This Project Does**
 
-1. ✅ Scrapes 30+ subreddits for complaints and pain points
-2. ✅ Detects pain points using keyword analysis
-3. ✅ Categorizes problems (Career, Finance, Health, etc.)
-4. ✅ Stores data in MongoDB Atlas (cloud database)
-5. ✅ Exposes REST APIs for teammates
-6. ✅ Identifies business opportunities from pain points
+1.  Scrapes 30+ subreddits for complaints and pain points
+2.  Detects pain points using keyword analysis
+3.  Categorizes problems (Career, Finance, Health, etc.)
+4.  Stores data in MongoDB Atlas (cloud database)
+5.  Exposes REST APIs for teammates
+6.  Identifies business opportunities from pain points
 
 ---
 
-## 📁 **Project Structure**
+## **Project Structure**
 
 ```
 reddit-pain-points-scraper/
@@ -31,7 +31,7 @@ reddit-pain-points-scraper/
 
 ---
 
-## ⚙️ **Setup Instructions**
+## **Setup Instructions**
 
 ### **Step 1: Install Python Dependencies**
 
@@ -111,11 +111,11 @@ API_HOST=0.0.0.0
 API_PORT=8000
 ```
 
-**⚠️ IMPORTANT:** Replace with your actual values!
+**IMPORTANT:** Replace with your actual values!
 
 ---
 
-## 🚀 **How to Run**
+## **How to Run**
 
 ### **Method 1: Run Scraper First**
 
@@ -157,7 +157,7 @@ python scripts/run_scraper.py --search "frustrated with job search"
 
 ---
 
-## 🔗 **API Endpoints (For Your Teammates)**
+## **API Endpoints (For Your Teammates)**
 
 Your teammates use these APIs **instead of MongoDB directly**.
 
@@ -247,7 +247,7 @@ print(df.groupby('category')['score'].mean())
 
 ---
 
-## 📊 **Categories Detected**
+##  **Categories Detected**
 
 The system categorizes pain points into:
 
@@ -264,7 +264,7 @@ The system categorizes pain points into:
 
 ---
 
-## 🎯 **Subreddits Scraped**
+## **Subreddits Scraped**
 
 **Indian Subreddits:**
 - india, bangalore, delhi, mumbai, hyderabad, pune
@@ -280,7 +280,7 @@ The system categorizes pain points into:
 
 ---
 
-## 🔥 **Advanced Usage**
+##  **Advanced Usage**
 
 ### **Deploy to Cloud (For Team Access)**
 
@@ -313,7 +313,7 @@ Windows Task Scheduler:
 
 ---
 
-## 🧪 **Testing**
+## **Testing**
 
 ```bash
 # Test scraper
@@ -328,7 +328,7 @@ curl http://localhost:8000/api/v1/statistics
 
 ---
 
-## 🎓 **For Project Review/Viva**
+##  **For Project Review/Viva**
 
 **Question:** What is your role in this project?
 
@@ -342,19 +342,19 @@ curl http://localhost:8000/api/v1/statistics
 
 ---
 
-## 📝 **Next Steps**
+##  **Next Steps**
 
-1. ✅ Setup Reddit API credentials
-2. ✅ Create MongoDB Atlas cluster
-3. ✅ Configure .env file
-4. ✅ Run scraper to collect data
-5. ✅ Start FastAPI server
-6. ✅ Share API endpoints with teammates
-7. 🚀 Build amazing features!
+1.  Setup Reddit API credentials
+2.  Create MongoDB Atlas cluster
+3.  Configure .env file
+4.  Run scraper to collect data
+5.  Start FastAPI server
+6.  Share API endpoints with teammates
+7.  Build amazing features!
 
 ---
 
-## 🐛 **Troubleshooting**
+##  **Troubleshooting**
 
 **Error: "Invalid authentication credentials"**
 - Check Reddit API credentials in `.env`
@@ -372,7 +372,7 @@ curl http://localhost:8000/api/v1/statistics
 
 ---
 
-## 📧 **Support**
+##  **Support**
 
 If stuck, check:
 1. MongoDB Atlas dashboard - Is cluster running?
@@ -381,4 +381,4 @@ If stuck, check:
 
 ---
 
-**Happy Scraping! 🚀**
+**Happy Scraping! **
